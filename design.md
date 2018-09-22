@@ -15,9 +15,6 @@ post '/lists'
   user_id,    
 }
 
-
-
-
 post '/tasks'
 {
   list_id
