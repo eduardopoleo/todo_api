@@ -1,7 +1,9 @@
 require 'bundler'
 Bundler.require
 
+Dotenv.load
+
 Sequel.extension :migration, :core_extensions
-DB = Sequel.connect('postgresql://localhost/todo_api')
+DB = Sequel.connect(ENV['DATABASE_URL'])
 
 

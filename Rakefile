@@ -38,7 +38,7 @@ namespace :db do
     migrations_dir = './db/migrations'
     Sequel::TimestampMigrator.run(DB, migrations_dir, {})
 
-    system("sequel -d 'postgresql://localhost/todo_api' > ./db/schema.rb")
+    system("sequel -d '#{ENV['DATABASE_URL']}' > ./db/schema.rb")
   end
 
   task :rollback do
@@ -46,6 +46,6 @@ namespace :db do
     target = Sequel::TimestampMigrator.new(DB, migrations_dir).applied_migrations[-2].to_i
     Sequel::Migrator.run(DB, migrations_dir, target: target)
 
-    system("sequel -d 'postgresql://localhost/todo_api' > ./db/schema.rb")
+    system("sequel -d '#{ENV['DATABASE_URL']}' > ./db/schema.rb")
   end
 end

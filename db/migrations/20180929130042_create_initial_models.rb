@@ -39,7 +39,7 @@ class CreateInitialModels < Sequel::Migration
   end
 
   def down
-    drop_table :tests
+    drop_table :users
     drop_table :lists
     drop_table :tasks
   end
