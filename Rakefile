@@ -1,4 +1,5 @@
 require 'fileutils'
+
 require_relative './application'
 
 namespace :db do
@@ -36,11 +37,15 @@ namespace :db do
   task :migrate do
     migrations_dir = './db/migrations'
     Sequel::TimestampMigrator.run(DB, migrations_dir, {})
+
+    system("sequel -d 'postgresql://localhost/todo_api' > ./db/schema.rb")
   end
 
   task :rollback do
     migrations_dir = './db/migrations'
     target = Sequel::TimestampMigrator.new(DB, migrations_dir).applied_migrations[-2].to_i
     Sequel::Migrator.run(DB, migrations_dir, target: target)
+
+    system("sequel -d 'postgresql://localhost/todo_api' > ./db/schema.rb")
   end
 end
