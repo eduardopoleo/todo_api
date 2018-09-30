@@ -2,9 +2,9 @@ class CreateInitialModels < Sequel::Migration
   def up
     create_table :users do
       primary_key :id
-      column :name, :char, size: 32
-      column :email, :char, size: 32, unique: true
-      column :password_digest, :char, size: 256
+      column :name, String
+      column :email, String, unique: true
+      column :password_digest, String
 
       column :created_at, :timestamp, null: false
       column :updated_at, :timestamp, null: false
@@ -14,7 +14,7 @@ class CreateInitialModels < Sequel::Migration
 
     create_table :lists do
       primary_key :id
-      column :name, :char, size: 32
+      column :name, String
       column :user_id, :integer
 
       column :created_at, :timestamp, null: false
@@ -27,7 +27,7 @@ class CreateInitialModels < Sequel::Migration
       primary_key :id
       column :user_id, :integer
       column :list_id, :integer
-      column :name, :char, size: 32
+      column :name, String
       column :completed, :boolean
 
       column :created_at, :timestamp, null: false
