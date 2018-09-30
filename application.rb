@@ -7,6 +7,8 @@ Dotenv.load
 
 # set up the DB
 Sequel.extension :migration, :core_extensions
+Sequel::Model.plugin :timestamps, force: true, update_on_create: true
+
 DB = Sequel.connect(ENV['DATABASE_URL'])
 
 # loads app
