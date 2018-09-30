@@ -4,8 +4,8 @@ Sequel.migration do
       primary_key :id
       String :name, :size=>32, :fixed=>true
       Integer :user_id
-      DateTime :created_at
-      DateTime :updated_at
+      DateTime :created_at, :null=>false
+      DateTime :updated_at, :null=>false
       
       index [:user_id]
     end
@@ -22,8 +22,8 @@ Sequel.migration do
       Integer :list_id
       String :name, :size=>32, :fixed=>true
       TrueClass :completed
-      DateTime :created_at
-      DateTime :updated_at
+      DateTime :created_at, :null=>false
+      DateTime :updated_at, :null=>false
       
       index [:list_id]
       index [:user_id]
@@ -32,10 +32,10 @@ Sequel.migration do
     create_table(:users, :ignore_index_errors=>true) do
       primary_key :id
       String :name, :size=>32, :fixed=>true
-      String :email, :size=>1, :fixed=>true
-      String :password_digest, :size=>1, :fixed=>true
-      DateTime :created_at
-      DateTime :updated_at
+      String :email, :size=>32, :fixed=>true
+      String :password_digest, :size=>256, :fixed=>true
+      DateTime :created_at, :null=>false
+      DateTime :updated_at, :null=>false
       
       index [:email]
       index [:email], :name=>:users_email_key, :unique=>true

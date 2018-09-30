@@ -1,6 +1,12 @@
 source 'https://rubygems.org'
 
 gem 'sequel'
-gem 'pry'
 gem 'pg'
 gem 'dotenv'
+gem 'bcrypt'
+
+
+group :development, :test do
+  gem 'pry'
+  gem 'rspec'
+end

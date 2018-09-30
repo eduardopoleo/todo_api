@@ -3,11 +3,11 @@ class CreateInitialModels < Sequel::Migration
     create_table :users do
       primary_key :id
       column :name, :char, size: 32
-      column :email, :char, unique: true
-      column :password_digest, :char
+      column :email, :char, size: 32, unique: true
+      column :password_digest, :char, size: 256
 
-      column :created_at, :timestamp
-      column :updated_at, :timestamp
+      column :created_at, :timestamp, null: false
+      column :updated_at, :timestamp, null: false
 
       index :email
     end
@@ -17,8 +17,8 @@ class CreateInitialModels < Sequel::Migration
       column :name, :char, size: 32
       column :user_id, :integer
 
-      column :created_at, :timestamp
-      column :updated_at, :timestamp
+      column :created_at, :timestamp, null: false
+      column :updated_at, :timestamp, null: false
 
       index :user_id
     end
@@ -30,8 +30,8 @@ class CreateInitialModels < Sequel::Migration
       column :name, :char, size: 32
       column :completed, :boolean
 
-      column :created_at, :timestamp
-      column :updated_at, :timestamp
+      column :created_at, :timestamp, null: false
+      column :updated_at, :timestamp, null: false
 
       index :list_id
       index :user_id

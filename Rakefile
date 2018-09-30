@@ -1,6 +1,14 @@
 require 'fileutils'
 
-require_relative './application'
+require 'bundler'
+Bundler.require
+
+# loads the environment
+Dotenv.load
+
+# set up the DB
+Sequel.extension :migration, :core_extensions
+DB = Sequel.connect(ENV['DATABASE_URL'])
 
 namespace :db do
   task :generate_migration do
