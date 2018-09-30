@@ -3,6 +3,8 @@ Probably I want an api that looks this this. It's always from the point of view 
 list = user.create_list(name: )
 task = user.create_task(name: , list: list_object)
 
+
+
 Add constrains on 
 - list
   - user_id
@@ -11,3 +13,11 @@ Add constrains on
   - list_id
 
 Add groups concept
+
+Think about a graphical interface. E,g 
+user.outstanding_tasks
+list.oustanding_tasks
+list.tasks
+list.completed_tasks
+...
+
