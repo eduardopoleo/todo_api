@@ -1,0 +1,13 @@
+Probably I want an api that looks this this. It's always from the point of view of the user
+
+list = user.create_list(name: )
+task = user.create_task(name: , list: list_object)
+
+Add constrains on 
+- list
+  - user_id
+- task
+  - user_id
+  - list_id
+
+Add groups concept
