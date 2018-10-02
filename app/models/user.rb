@@ -15,7 +15,6 @@ class User < Sequel::Model(:users)
   end
 
   def outstading_tasks
-    binding.pry
     tasks_dataset.where(assignee_id: id, completed: false)
   end
 end
