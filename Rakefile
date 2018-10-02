@@ -4,7 +4,8 @@ require 'bundler'
 Bundler.require
 
 # loads the environment
-Dotenv.load
+env = ENV['RUBY_ENV'] ? ".env.#{ENV['RUBY_ENV']}" : '.env'
+Dotenv.load(env)
 
 # set up the DB
 Sequel.extension :migration, :core_extensions
@@ -46,7 +47,7 @@ namespace :db do
     migrations_dir = './db/migrations'
     Sequel::TimestampMigrator.run(DB, migrations_dir, {})
 
-    system("sequel -d '#{ENV['DATABASE_URL']}' > ./db/schema.rb")
+    system("sequel -d '#{ENV['DATABASE_URL']}' > ./db/schema.rb") 
   end
 
   task :rollback do

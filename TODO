@@ -15,9 +15,15 @@ Add constrains on
 Add groups concept
 
 Think about a graphical interface. E,g 
-user.outstanding_tasks
-list.oustanding_tasks
 list.tasks
-list.completed_tasks
-...
 
+list.completed_tasks
+list.oustanding_tasks
+
+user.outstanding_tasks
+user.completed_tasks
+
+
+
+User terminal-table
+fg

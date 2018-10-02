@@ -24,7 +24,10 @@ Sequel.migration do
       TrueClass :completed
       DateTime :created_at, :null=>false
       DateTime :updated_at, :null=>false
+      Integer :assignee_id
       
+      index [:assignee_id]
+      index [:completed]
       index [:list_id]
       index [:user_id]
     end
