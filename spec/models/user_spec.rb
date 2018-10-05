@@ -40,6 +40,8 @@ describe User do
 
     it 'only returns the tasks not completed by the user' do
       expect { subject }.to change(Group, :count).by(1)
+      expect(Group.last.name).to eq('Super group')
+      expect(UserGroup.last.user_id).to eq(user.id)
     end
   end
 end

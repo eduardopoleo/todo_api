@@ -15,4 +15,8 @@ FactoryBot.define do
     list
     name { "My super task" }
   end
+
+  factory :group do
+    name { "My super group" }
+  end
 end
