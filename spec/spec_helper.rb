@@ -21,12 +21,16 @@ Dotenv.load('.env.test')
 # require 'json_expressions/rspec'
 
 require 'factory_bot'
+require 'database_cleaner'
+
 require_relative '../application'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
+  DatabaseCleaner.strategy = :transaction
+
   config.include FactoryBot::Syntax::Methods
 
   config.expect_with :rspec do |expectations|
@@ -52,7 +56,14 @@ RSpec.configure do |config|
   config.before(:suite) do
     FactoryBot.define { to_create(&:save) }
     FactoryBot.find_definitions
+    DatabaseCleaner.start
   end
+
+  config.after(:suite) do
+    DatabaseCleaner.clean
+  end
+
+
 
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will
   # have no way to turn it off -- the option exists only for backwards

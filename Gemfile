@@ -8,5 +8,6 @@ gem 'bcrypt'
 group :development, :test do
   gem 'pry'
   gem 'rspec'
+  gem 'database_cleaner'
   gem 'factory_bot'
 end
