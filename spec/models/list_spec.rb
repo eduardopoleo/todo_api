@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 require 'spec_helper'
 
 describe List do
@@ -16,3 +15,19 @@ describe List do
     end
   end
 end
+
+__END__
+
+query = %(
+  SELECT lists.name, count(tasks.id) from lists
+  LEFT JOIN tasks on lists.id = tasks.list_id
+  group by (lists.id)
+)
+
+query = %(
+  SELECT lists.name, lists.id as list_id, count(tasks.id) from lists
+  LEFT JOIN tasks on lists.id = tasks.list_id
+  group by (lists.id)
+)
+
+DB[query].to_a
