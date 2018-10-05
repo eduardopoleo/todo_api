@@ -5,7 +5,6 @@ Bundler.require
 # loads the environment
 env = ENV['RUBY_ENV'] || 'development'
 
-
 Dotenv.load(".env.#{env}")
 
 # set up the DB
