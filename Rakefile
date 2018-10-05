@@ -4,8 +4,7 @@ require 'bundler'
 Bundler.require
 
 # loads the environment
-env = ENV['RUBY_ENV'] ? ".env.#{ENV['RUBY_ENV']}" : '.env'
-Dotenv.load(env)
+Dotenv.load(".env.#{ENV['RUBY_ENV']}")
 
 # set up the DB
 Sequel.extension :migration, :core_extensions

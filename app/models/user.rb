@@ -17,4 +17,11 @@ class User < Sequel::Model(:users)
   def outstading_tasks
     tasks_dataset.where(assignee_id: id, completed: false)
   end
+
+  def create_group(name)
+    DB.transaction do
+      group = Group.create(name: name)
+      UserGroup.create(user_id: id, group_id: group.id)
+    end
+  end
 end

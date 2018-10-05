@@ -1,5 +1,12 @@
 Sequel.migration do
   change do
+    create_table(:groups) do
+      primary_key :id
+      String :name, :text=>true
+      DateTime :created_at, :null=>false
+      DateTime :updated_at, :null=>false
+    end
+    
     create_table(:lists, :ignore_index_errors=>true) do
       primary_key :id
       String :name, :text=>true
@@ -29,6 +36,17 @@ Sequel.migration do
       index [:assignee_id]
       index [:completed]
       index [:list_id]
+      index [:user_id]
+    end
+    
+    create_table(:user_groups, :ignore_index_errors=>true) do
+      primary_key :id
+      Integer :user_id
+      Integer :group_id
+      DateTime :created_at, :null=>false
+      DateTime :updated_at, :null=>false
+      
+      index [:group_id]
       index [:user_id]
     end
     

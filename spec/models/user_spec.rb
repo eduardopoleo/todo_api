@@ -32,4 +32,14 @@ describe User do
       expect(subject).to match_array([task3])
     end
   end
+
+  describe '#create_group' do
+    let(:user) { create(:user) }
+
+    subject { user.create_group('Super group') }
+
+    it 'only returns the tasks not completed by the user' do
+      expect { subject }.to change(Group, :count).by(1)
+    end
+  end
 end
