@@ -8,6 +8,11 @@ class List < Sequel::Model(:lists)
   end
 
   def add_task(name, user)
-    Task.create(name: name, user_id: user_id, list_id: id)
+    DB.transaction do
+      Task.create(name: name, user_id: user_id, list_id: id)
+      # naive implemetation to update list metadata
+      update(task_count: task_count + 1)
+      update(last_added_task: name)
+    end
   end
 end

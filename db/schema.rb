@@ -15,7 +15,7 @@ Sequel.migration do
       DateTime :updated_at, :null=>false
       Integer :group_id
       Integer :task_count, :default=>0
-      String :last_task_name, :text=>true
+      String :last_added_task, :text=>true
       
       index [:group_id]
       index [:user_id]
