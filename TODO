@@ -12,12 +12,26 @@ list = user.create_list(name: )
 task = user.create_task(name: , list: list_object)
 
 ####### OUPUT GRAPH INTERFACE API #######
-User terminal-table
-  list.completed_tasks
-  list.oustanding_tasks
 
-  user.outstanding_tasks
-  user.completed_tasks
+List#tasks (list#outstanding_task)
+            List Name
+task: name | Assignee | status (X 0r j)
+
+Group#participants
+          Group Name
+user: name, email, date_added
+
+Group#lists
+Name | # Task (task_count) | Last task | Creator
+
+User#my_groups
+group: name, date_added
+
+User#my_lists
+Name | # Task (task_count)  | Last task | Group | Creator
+
+User#tasks (user#outstanding_task)
+name | list | status (X 0r j)
 
 
 ####### SET UP ########
