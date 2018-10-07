@@ -24,4 +24,8 @@ class User < Sequel::Model(:users)
       UserGroup.create(user_id: id, group_id: group.id)
     end
   end
+
+  def assign(task)
+    task.update(assignee_id: id)
+  end
 end

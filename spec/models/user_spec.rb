@@ -44,4 +44,16 @@ describe User do
       expect(UserGroup.last.user_id).to eq(user.id)
     end
   end
+
+  describe '#assing' do
+    let(:user) { create(:user) }
+    let(:task) { create(:task) }
+
+    subject { user.assign(task) }
+
+    it 'assings task to the user' do
+      subject
+      expect(task.assigned_to).to eq(user)
+    end
+  end
 end

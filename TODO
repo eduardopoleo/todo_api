@@ -1,29 +1,26 @@
-Probably I want an api that looks this this. It's always from the point of view of the user
 
-list = user.create_list(name: )
-task = user.create_task(name: , list: list_object)
-
-
-
-Add constrains on 
+####### DB #######
+Add unique constrains
 - list
   - user_id
 - task
   - user_id
   - list_id
 
-Add groups concept
+###### CREATE API ######
+list = user.create_list(name: )
+task = user.create_task(name: , list: list_object)
 
-Think about a graphical interface. E,g 
-list.tasks
-
-list.completed_tasks
-list.oustanding_tasks
-
-user.outstanding_tasks
-user.completed_tasks
-
-
-
+####### OUPUT GRAPH INTERFACE API #######
 User terminal-table
-fg
+  list.completed_tasks
+  list.oustanding_tasks
+
+  user.outstanding_tasks
+  user.completed_tasks
+
+
+####### SET UP ########
+E.g DB connection code is repeated in 3 places rake, application.rb, test
+
+

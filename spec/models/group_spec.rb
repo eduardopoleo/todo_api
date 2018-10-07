@@ -14,4 +14,14 @@ describe Group do
       expect(UserGroup.last.group_id).to eq(group.id)
     end
   end
+
+  describe 'add_group' do
+    let!(:group) { create(:group) }
+    let!(:list) { create(:list) }
+
+    it 'add the list to the group' do
+      group.add_list(list)
+      expect(list.group).to eq(group)
+    end
+  end
 end

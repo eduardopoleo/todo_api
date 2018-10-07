@@ -14,20 +14,18 @@ describe List do
       expect(subject).to match_array([task1, task2])
     end
   end
+
+  describe '#add_task' do
+    let!(:list) { create(:list) }
+    let!(:user) { create(:user) }
+
+    it 'creates the task' do
+      expect {
+        list.add_task('Buy groceries', user)
+      }.to change(Task, :count).by(1)
+
+      expect(Task.last.name).to eq('Buy groceries')
+      expect(Task.last.list_id).to eq(list.id)
+    end
+  end
 end
-
-__END__
-
-query = %(
-  SELECT lists.name, count(tasks.id) from lists
-  LEFT JOIN tasks on lists.id = tasks.list_id
-  group by (lists.id)
-)
-
-query = %(
-  SELECT lists.name, lists.id as list_id, count(tasks.id) from lists
-  LEFT JOIN tasks on lists.id = tasks.list_id
-  group by (lists.id)
-)
-
-DB[query].to_a
