@@ -29,7 +29,8 @@ describe List do
     end
 
     it 'updates the list metadata' do
-      expect { list.add_task('Buy groceries', user) }.to change(list, :task_count).by(1)
+      expect { list.add_task('Buy groceries', user) }.to change(list.reload, :task_count).by(1)
+
       expect(list.reload.last_added_task).to eq('Buy groceries')
     end
   end

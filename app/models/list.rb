@@ -9,10 +9,17 @@ class List < Sequel::Model(:lists)
 
   def add_task(name, user)
     DB.transaction do
-      Task.create(name: name, user_id: user_id, list_id: id)
-      # naive implemetation to update list metadata
-      update(task_count: task_count + 1)
-      update(last_added_task: name)
+      Task.create(name: name, user_id: user.id, list_id: id)
+
+      query = %(
+        UPDATE lists
+          SET task_count = task_count + 1, last_added_task = '#{name}'
+        where id = #{id}
+      ).gsub("\n", ' ').squeeze(' ')
+
+      DB[query].to_a
     end
+
+    reload # not necesary but makes testing lot easier.
   end
 end
