@@ -1,6 +1,7 @@
 class User < Sequel::Model(:users)
   one_to_many :lists
   one_to_many :tasks
+  one_to_many :assigned_tasks, class: :Task, key: :assignee_id
 
   def self.create(name:, email:, password:)
     encypted_password = BCrypt::Password.create(password)

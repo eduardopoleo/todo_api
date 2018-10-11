@@ -2,10 +2,11 @@
 ####### DB #######
 Add unique constrains
 - list
-  - user_id
+  - user_id (also not nil)
 - task
-  - user_id
-  - list_id
+  - user_id (not nil)
+  - list_id (not nil)
+
 
 ###### CREATE API ######
 list = user.create_list(name: )

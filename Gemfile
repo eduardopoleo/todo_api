@@ -4,6 +4,7 @@ gem 'sequel'
 gem 'pg'
 gem 'dotenv'
 gem 'bcrypt'
+gem 'terminal-table'
 
 group :development, :test do
   gem 'pry'

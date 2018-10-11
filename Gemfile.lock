@@ -36,9 +36,12 @@ GEM
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
     sequel (5.12.0)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     thread_safe (0.3.6)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    unicode-display_width (1.4.0)
 
 PLATFORMS
   ruby
@@ -52,6 +55,7 @@ DEPENDENCIES
   pry
   rspec
   sequel
+  terminal-table
 
 BUNDLED WITH
    1.16.5

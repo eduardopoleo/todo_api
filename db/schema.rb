@@ -32,7 +32,7 @@ Sequel.migration do
       Integer :user_id, :null=>false
       Integer :list_id, :null=>false
       String :name, :text=>true
-      TrueClass :completed
+      TrueClass :completed, :default=>false
       DateTime :created_at, :null=>false
       DateTime :updated_at, :null=>false
       Integer :assignee_id

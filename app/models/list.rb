@@ -20,6 +20,18 @@ class List < Sequel::Model(:lists)
       DB[query].to_a
     end
 
-    reload # not necesary but makes testing lot easier.
+    # maybe it makes more sense to return the task created?
+    reload 
+  end
+
+  def to_table
+    table = Terminal::Table.new title: name, headings: ['Task Name', 'Assignee', 'Completed'] do |t|
+      tasks_dataset.eager(:assignee).paged_each do |task|
+        t << [task.name, task.assignee&.name, task.completed]
+        t.style = {:all_separators => true}
+      end
+    end
+
+    puts table
   end
 end
