@@ -11,7 +11,6 @@ FactoryBot.define do
   end
 
   factory :task do
-    user
     list
     name { "My super task" }
   end

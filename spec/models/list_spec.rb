@@ -17,11 +17,10 @@ describe List do
 
   describe '#add_task' do
     let!(:list) { create(:list) }
-    let!(:user) { create(:user) }
 
     it 'creates the task' do
       expect {
-        list.add_task('Buy groceries', user)
+        list.add_task('Buy groceries')
       }.to change(Task, :count).by(1)
 
       expect(Task.last.name).to eq('Buy groceries')
@@ -29,7 +28,7 @@ describe List do
     end
 
     it 'updates the list metadata' do
-      expect { list.add_task('Buy groceries', user) }.to change(list.reload, :task_count).by(1)
+      expect { list.add_task('Buy groceries') }.to change(list.reload, :task_count).by(1)
 
       expect(list.reload.last_added_task).to eq('Buy groceries')
     end

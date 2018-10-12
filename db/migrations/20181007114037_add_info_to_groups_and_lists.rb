@@ -11,9 +11,9 @@ class AddInfoToGroupsAndLists < Sequel::Migration
 
   def down
     alter_table(:lists) do
-      remove_column :group_id
-      remove_column :task_count
-      remove_column :last_task_name
+      drop_column :group_id
+      drop_column :task_count
+      drop_column :last_task_name
     end
   end
 end

@@ -7,9 +7,9 @@ class List < Sequel::Model(:lists)
     tasks_dataset.where(completed: false)
   end
 
-  def add_task(name, user)
+  def add_task(name)
     DB.transaction do
-      Task.create(name: name, user_id: user.id, list_id: id)
+      Task.create(name: name, list_id: id)
 
       query = %(
         UPDATE lists

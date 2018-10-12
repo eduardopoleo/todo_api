@@ -29,7 +29,6 @@ Sequel.migration do
     
     create_table(:tasks, :ignore_index_errors=>true) do
       primary_key :id
-      Integer :user_id, :null=>false
       Integer :list_id, :null=>false
       String :name, :text=>true
       TrueClass :completed, :default=>false
@@ -40,7 +39,6 @@ Sequel.migration do
       index [:assignee_id]
       index [:completed]
       index [:list_id]
-      index [:user_id]
     end
     
     create_table(:user_groups, :ignore_index_errors=>true) do

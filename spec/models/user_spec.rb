@@ -33,10 +33,10 @@ describe User do
     end
   end
 
-  describe '#create_group' do
+  describe '#add_group' do
     let(:user) { create(:user) }
 
-    subject { user.create_group('Super group') }
+    subject { user.add_group('Super group') }
 
     it 'only returns the tasks not completed by the user' do
       expect { subject }.to change(Group, :count).by(1)
@@ -53,7 +53,7 @@ describe User do
 
     it 'assings task to the user' do
       subject
-      expect(task.assigned_to).to eq(user)
+      expect(task.assignee).to eq(user)
     end
   end
 end
