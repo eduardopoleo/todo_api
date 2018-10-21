@@ -32,8 +32,10 @@ Sequel.migration do
       String :token, :text=>true, :null=>false
       Integer :user_id, :null=>false
       DateTime :created_at, :null=>false
+      TrueClass :valid, :default=>true
       
       index [:token]
+      index [:valid]
     end
     
     create_table(:tasks, :ignore_index_errors=>true) do

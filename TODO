@@ -38,4 +38,7 @@ name | list | status (X 0r j)
 ####### SET UP ########
 E.g DB connection code is repeated in 3 places rake, application.rb, test
 
+########TEST ###########
+All web handlers require tests. Figure out how to test rack apps
+
 

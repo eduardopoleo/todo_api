@@ -15,6 +15,8 @@ module Web
         case req.path
         when '/users'
           status, headers, body = Web::Handlers::Users::Create.handle(params)
+        when '/login'
+          status, headers, body = Web::Handlers::Users::Login.handle(params)
         else
           status, headers, body = [404, {}, 'Not found']
         end
