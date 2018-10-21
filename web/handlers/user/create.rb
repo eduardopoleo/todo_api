@@ -21,7 +21,7 @@ module Web
             Session.create(user_id: user.id, token: token)
           end
 
-          [201, { 'Content-Type' => 'aplication/json' }, user.to_hash.merge(session: token).to_json]
+          [201, { 'Content-Type' => 'aplication/json' }, user.to_hash.merge(session_token: token).to_json]
         end
 
         private
