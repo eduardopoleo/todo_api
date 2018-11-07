@@ -20,6 +20,12 @@ class User < Sequel::Model(:users)
     Task.where(assignee_id: id, completed: false)
   end
 
+  def create_group(name)
+    Group.create(name: name).tap do |group|
+      UserGroup.create(group_id: group.id, user_id: self.id)
+    end
+  end
+
   def add_group(name)
     DB.transaction do
       group = Group.create(name: name)

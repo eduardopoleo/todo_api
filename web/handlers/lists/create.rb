@@ -16,10 +16,12 @@ module Web
 
         def handle
           # TODO: this is wrong. We should be able to stop execution way before
+          # like a before action or a middleware that handles auth before getting
+          # here
           if user 
             list = List.create(list_params)
-
-            # TODO: these serializers are becoming all to common at this point
+            
+            # TODO: these serializers are becoming all too common at this point
             [201, { 'Content-Type' => 'aplication/json' }, list.to_hash.to_json]
           else
             [401, { 'Content-Type' => 'aplication/json' }, { error: "Unauthorized" }.to_json]

@@ -17,7 +17,7 @@ module Web
           user = nil
 
           DB.transaction do
-            user = User.create(user_params)
+            user = User.create(user_params) # no params validation ??
             Session.create(user_id: user.id, token: token)
           end
 
