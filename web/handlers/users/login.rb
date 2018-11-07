@@ -22,7 +22,8 @@ module Web
               Session.where(valid: true).update(valid: false)
               Session.create(user_id: user.id, token: token)
             end
-
+            # This is not correct. The session token has to be on the headers. Even the CLI 
+            # should know how to handle it.
             [201, { 'Content-Type' => 'aplication/json' }, { session_token: token }.to_json]
           else
             [401, { 'Content-Type' => 'aplication/json' }, { error: "Unauthorized" }.to_json]

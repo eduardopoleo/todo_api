@@ -20,6 +20,8 @@ module Web
           status, headers, body = Web::Handlers::Users::Login.handle(params)
         when '/lists'
           status, headers, body = Web::Handlers::Lists::Create.handle(params, token)
+        when '/invitations'
+          status, headers, body = Web::Handlers::Invitations::Create.handle(params, token)
         else
           status, headers, body = [404, {}, 'Not found']
         end

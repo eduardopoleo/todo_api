@@ -23,6 +23,4 @@ class Group < Sequel::Model(:groups)
 
     puts table
   end
-
-  
 end

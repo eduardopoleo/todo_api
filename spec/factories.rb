@@ -1,3 +1,5 @@
+require 'securerandom'
+
 FactoryBot.define do
   factory :user do
     name { "John" }
@@ -17,5 +19,10 @@ FactoryBot.define do
 
   factory :group do
     name { "My super group" }
+  end
+
+  factory :invitation do
+    sequence(:email) { |n| "mike#{n}@awesome.com"}
+    token { SecureRandom.base64 }
   end
 end

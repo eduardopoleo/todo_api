@@ -7,6 +7,17 @@ Sequel.migration do
       DateTime :updated_at, :null=>false
     end
     
+    create_table(:invitations, :ignore_index_errors=>true) do
+      primary_key :id
+      String :email, :text=>true, :null=>false
+      String :token, :text=>true
+      Integer :group_id
+      DateTime :created_at, :null=>false
+      DateTime :updated_at, :null=>false
+      
+      index [:token]
+    end
+    
     create_table(:lists, :ignore_index_errors=>true) do
       primary_key :id
       String :name, :text=>true
