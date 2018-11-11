@@ -1,0 +1,43 @@
+FRAMEWORK BASIS
+A class to kickstart the app 
+- In this class we instantiate the router
+- And I guess everything else that needs to be instantiated
+- One of the things that we’re gonna have is an instance of the router.
+
+Run the rack app
+run -> 
+
+Router 
+- Provides the DSL that its used to build the routes
+- When passed a route determine which handler is to be used
+- Returns => [path, {class, method}]
+- Instantiate a route with that
+- Classes are the web handlers
+
+Route
+- Initializes with [path, class, method] 
+- executes(env -> params) and sends method to class (Follows rails api of a method for endpoint)
+- 
+
+Response
+- Web handlers return a response object
+
+Base Handler
+- Parses our the  params body from the env.
+- Before calling handle on the Childs
+
+Before filters
+- Top level handler
+- Keeps track of stack of @before handlers
+- Self inherit adds them to the instance
+- Execute method that calls them
+
+How does a before filter stops this chain?
+Maybe something like this. 
+self.class.before_actions.each do |callback| 
+  return @response if @response
+  send(callback)
+end
+
+
+Each if any callback sets a response object
