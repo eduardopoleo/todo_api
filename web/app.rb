@@ -1,12 +1,5 @@
-# loads application logic
-require_relative '../application'
-
-# loads all the web handlers
-files = Dir['./web/handlers/**/*.rb'].sort
-files.each { |f| require f }
-
 module Web
-  class App
+  class App # consider if this could be named as a controller
     def call(env)
       req = Rack::Request.new(env)
       params = JSON.parse(req.body.read)
@@ -15,6 +8,8 @@ module Web
       if req.post?
         case req.path
         when '/users'
+          # This handlers should be renamed controllers
+          # They should inherit from a top level controller.
           status, headers, body = Web::Handlers::Users::Create.handle(params)
         when '/login'
           status, headers, body = Web::Handlers::Users::Login.handle(params)

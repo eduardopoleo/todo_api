@@ -39,5 +39,5 @@ self.class.before_actions.each do |callback|
   send(callback)
 end
 
-
-Each if any callback sets a response object
+What would be the purpose of middleware then?
+- Maybe play around with the env before it even this the controller chain.
