@@ -1,18 +1,7 @@
-# You need to use nested module so that ruby does not try to find it.
-require 'securerandom'
-
 module Web
-  module Handlers
+  module Controllers
     module Users
-      class Create
-        def self.handle(params)
-          new(params).handle
-        end
-
-        def initialize(params)
-          @params = params
-        end
-
+      class Create < Base
         def handle
           user = nil
 
@@ -55,5 +44,3 @@ module Web
     end
   end
 end
-
-

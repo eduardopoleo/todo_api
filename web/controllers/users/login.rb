@@ -1,7 +1,7 @@
 require 'securerandom'
 
 module Web
-  module Handlers
+  module Controllers
     module Users
       class Login
         def self.handle(params)

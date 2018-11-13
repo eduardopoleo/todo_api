@@ -1,5 +1,5 @@
 module Web
-  module Handlers
+  module Controllers
     module Invitations
       class Create
         def self.handle(params)
