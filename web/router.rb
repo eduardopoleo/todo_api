@@ -2,37 +2,24 @@ module Web
   class Router
     attr_reader :routes
 
+    HTTP_VERBS = [:get, :patch, :post, :put, :delete].freeze
+
     def initialize
       @routes = []
     end
 
     def config(&block)
       # Here I need to use instance_eval otherwise the block gets executed on the
-      # context of the routes file but I want it here 
+      # context of the routes file. But I want the contex of the router instance
+      # because it's in here where I have access to the @routes instance variable
+      # and the method definitions get, post put
       instance_eval(&block)
     end
 
-    def get(path, options)
-      routes << { verb: 'get', path: path, controller: options[:to] }
+    HTTP_VERBS.each do |method|
+      define_method(method) do |path, options|
+        routes << { verb: method.to_s, path: path, controller: options[:to] }
+      end
     end
   end
 end
-__END__
-
-AppRouter.config do
-  get '/users', to: 'users#index'
-  post '/invitations', to: ''
-end
-
-=> routes = [
-  { verb: 'get', path: '/users', class: Web::Handlers::Invitations::Index },
-  { verb: 'post', path: '/invitations', class: Web::Handlers::Invitations::Create }
-]
-
-AppRouter.match(path)
-
-def find_handler(path)
-  routes.select { |r| r[:path] == '/users' }.first
-end
-
-
