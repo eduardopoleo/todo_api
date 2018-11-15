@@ -17,7 +17,7 @@ module Web
     end
 
     def match(verb, path)
-      routes.find { |r| r[:verb] == verb.downcase, r[:path] == path.downcase }
+      routes.find { |r| r[:verb] == verb.downcase && r[:path] == path.downcase }
     end
 
     HTTP_VERBS.each do |method|

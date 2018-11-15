@@ -99,7 +99,18 @@ describe Web::Router do
   end
   
   describe 'match' do
-    it 'returns a route object with the correct information' do
+    before do
+      subject.config do
+        patch '/users', to: 'users#update'
+      end
+    end
+    
+    let(:route) { { verb: 'patch', path: '/users', controller: 'users#update' } }
+
+    context 'when the route provided matches a route in the config' do
+      it 'returns a route object with the correct information' do
+        expect(subject.match('patch', '/users')).to eq(route)
+      end
     end
   end
 end
