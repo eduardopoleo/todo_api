@@ -16,9 +16,13 @@ module Web
       instance_eval(&block)
     end
 
+    def match(verb, path)
+      routes.find { |r| r[:verb] == verb.downcase, r[:path] == path.downcase }
+    end
+
     HTTP_VERBS.each do |method|
       define_method(method) do |path, options|
-        routes << { verb: method.to_s, path: path, controller: options[:to] }
+        routes << { verb: method.to_s, path: path.downcase, controller: options[:to] }
       end
     end
   end

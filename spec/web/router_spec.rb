@@ -97,4 +97,9 @@ describe Web::Router do
       end
     end
   end
+  
+  describe 'match' do
+    it 'returns a route object with the correct information' do
+    end
+  end
 end
