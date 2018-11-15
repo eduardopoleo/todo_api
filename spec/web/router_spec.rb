@@ -99,17 +99,46 @@ describe Web::Router do
   end
   
   describe 'match' do
-    before do
-      subject.config do
-        patch '/users', to: 'users#update'
-      end
-    end
-    
-    let(:route) { { verb: 'patch', path: '/users', controller: 'users#update' } }
-
     context 'when the route provided matches a route in the config' do
+      before do
+        subject.config do
+          patch '/users', to: 'users#update'
+        end
+      end
+
+      let(:route) { { verb: 'patch', path: '/users', controller: 'users#update' } }
+
       it 'returns a route object with the correct information' do
         expect(subject.match('patch', '/users')).to eq(route)
+      end
+    end
+
+    context 'when theres not match' do
+      it 'returns a route object with the correct information' do
+        expect(subject.match('patch', '/users')).to be_nil
+      end
+    end
+  end
+
+  describe 'execute' do
+    context 'when the controller class exist' do
+      module Web
+        module Controller
+          module Users
+            class Update
+              def self.handle(params)
+                # NOOP
+              end
+            end
+          end
+        end
+      end
+
+      let(:params) { { name: 'jose', email: 'jose@gmail.com' } }
+
+      it 'handles the response with the corresponding controller' do
+        expect(Web::Controller::Users::Update).to receive(:handle).with(params)
+        subject.execute('users#update', params)
       end
     end
   end

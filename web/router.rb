@@ -20,10 +20,28 @@ module Web
       routes.find { |r| r[:verb] == verb.downcase && r[:path] == path.downcase }
     end
 
+    def execute(controller, params)
+      resource, action = controller.split('#')
+
+      controller(classify(resource), classify(action)).send(:handle, params)
+    end
+
     HTTP_VERBS.each do |method|
       define_method(method) do |path, options|
         routes << { verb: method.to_s, path: path.downcase, controller: options[:to] }
       end
+    end
+
+    private
+
+    def classify(class_name)
+      class_name.split('_').collect!{ |w| w.capitalize }.join
+    end
+
+    def controller(resource, action)
+      class_name = ['Web', 'Controller', resource, action].join('::')
+
+      Module.const_get(class_name)
     end
   end
 end
