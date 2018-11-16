@@ -39,7 +39,7 @@ module Web
     end
 
     def controller(resource, action)
-      class_name = ['Web', 'Controller', resource, action].join('::')
+      class_name = ['Web', 'Controllers', resource, action].join('::')
 
       Module.const_get(class_name)
     end
