@@ -2,6 +2,7 @@
 require 'web_helper'
 
 describe Web::Router do
+
   describe '#config' do
     let(:subject) { described_class.new }
 
@@ -122,22 +123,13 @@ describe Web::Router do
 
   describe 'execute' do
     context 'when the controller class exist' do
-      module Web
-        module Controller
-          module Users
-            class Update
-              def self.handle(params)
-                # NOOP
-              end
-            end
-          end
-        end
+      class Web::Controllers::Users::Update < Web::Controllers::Base
       end
 
       let(:params) { { name: 'jose', email: 'jose@gmail.com' } }
 
       it 'handles the response with the corresponding controller' do
-        expect(Web::Controller::Users::Update).to receive(:handle).with(params)
+        expect(Web::Controllers::Users::Update).to receive(:handle).with(params)
         subject.execute('users#update', params)
       end
     end

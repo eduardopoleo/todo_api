@@ -2,7 +2,7 @@
 require 'securerandom'
 
 module Web
-  module Handlers
+  module Controllers
     module Lists
       class Create
         def self.handle(params, token)
