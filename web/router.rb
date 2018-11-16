@@ -22,7 +22,6 @@ module Web
 
     def execute(controller, params)
       resource, action = controller.split('#')
-
       controller(classify(resource), classify(action)).send(:handle, params)
     end
 

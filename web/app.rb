@@ -1,33 +1,21 @@
 module Web
-  class App # consider if this could be named as a controller
+  class App
     def call(env)
       req = Rack::Request.new(env)
-      params = JSON.parse(req.body.read)
-
-# require 'pry'; binding.pry
 
       route = AppRouter.match(env['REQUEST_METHOD'], req.path)
 
-      AppRouter.execute(route[:controller], params)
-      # token = env['HTTP_AUTHORIZATION']
-      # if req.post?
-      #   case req.path
-      #   when '/users'
-      #     # This handlers should be renamed controllers
-      #     # They should inherit from a top level controller.
-      #     status, headers, body = Web::Handlers::Users::Create.handle(params)
-      #   when '/login'
-      #     status, headers, body = Web::Handlers::Users::Login.handle(params)
-      #   when '/lists'
-      #     status, headers, body = Web::Handlers::Lists::Create.handle(params, token)
-      #   when '/invitations'
-      #     status, headers, body = Web::Handlers::Invitations::Create.handle(params, token)
-      #   else
-      #     status, headers, body = [404, {}, 'Not found']
-      #   end
-      # end
+      if route
+        AppRouter.execute(route[:controller], params(req))
+      else
+        [404, { 'Content-Type' => 'text/html' }, ['Not Found']]
+      end
+    end
 
-      # [status, headers, [body]]
+    private
+
+    def params(req)
+      req.get? ? req.params : JSON.parse(req.body.read)
     end
   end
 end
