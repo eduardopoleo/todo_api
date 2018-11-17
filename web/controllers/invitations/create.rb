@@ -1,27 +1,13 @@
-module Web
-  module Controllers
-    module Invitations
-      class Create
-        def self.handle(params)
-          new(params).handle
-        end
+module InvitationsController
+  class Create < BaseController
+    def handle
+      Invitation.create(invitation_params)
+    end
 
-        def initialize(params)
-          @params = params
-        end
+    private
 
-        def handle
-          Invitation.create(invitation_params)
-        end
-
-        private
-
-        attr_reader :params
-
-        def invitation_params
-          { email: params[:email], group_id: params[:group_id] }
-        end
-      end
+    def invitation_params
+      { email: params[:email], group_id: params[:group_id] }
     end
   end
 end

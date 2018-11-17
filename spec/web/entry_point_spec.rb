@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'web_helper'
 
-describe Web::App do
+describe EntryPoint do
   let(:env) { Rack::MockRequest.env_for(url, options) }
     
   let(:options) do
@@ -12,20 +12,20 @@ describe Web::App do
     }
   end
 
-  class Web::Controllers::Users::Create
+  class UsersControllers::Create
     def self.handle(params)
     end
   end
 
-  class Web::Controllers::Users::Index
+  class UsersControllers::Index
     def self.handle(params)
     end
   end
 
-  AppRouter = Web::Router.new
+  WebApp = App.new
 
   before do
-    AppRouter.config do
+    WebApp.router.config do
       post '/users', to: 'users#create'
       get '/users', to: 'users#index'
     end
@@ -38,7 +38,7 @@ describe Web::App do
       let(:url) { 'http://example.com:9393/users' }
 
       it 'calls the correct controller' do
-        expect(Web::Controllers::Users::Create).to receive(:handle).with(JSON.parse(params))
+        expect(UsersControllers::Create).to receive(:handle).with(JSON.parse(params))
         described_class.new.call(env)
       end
     end
@@ -49,7 +49,7 @@ describe Web::App do
       let(:url) { 'http://example.com:9393/users?name=eduardo&email=eduardo@influitive.com' }
 
       it 'calls the correct controller' do
-        expect(Web::Controllers::Users::Index)
+        expect(UsersControllers::Index)
           .to receive(:handle)
           .with({'name' => 'eduardo', 'email' => 'eduardo@influitive.com' })
 

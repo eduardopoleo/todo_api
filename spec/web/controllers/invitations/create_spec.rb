@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'web_helper'
 
-describe Web::Controllers::Invitations::Create do
+describe InvitationsController::Create do
   describe '.handle' do
     subject { described_class.handle(params) }
 

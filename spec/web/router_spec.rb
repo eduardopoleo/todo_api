@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 require 'web_helper'
 
-describe Web::Router do
-
+describe Router do
   describe '#config' do
     let(:subject) { described_class.new }
 
@@ -123,13 +122,13 @@ describe Web::Router do
 
   describe 'execute' do
     context 'when the controller class exist' do
-      class Web::Controllers::Users::Update < Web::Controllers::Base
+      class UsersControllers::Update < BaseController
       end
 
       let(:params) { { name: 'jose', email: 'jose@gmail.com' } }
 
       it 'handles the response with the corresponding controller' do
-        expect(Web::Controllers::Users::Update).to receive(:handle).with(params)
+        expect(UsersControllers::Update).to receive(:handle).with(params)
         subject.execute('users#update', params)
       end
     end
