@@ -39,7 +39,7 @@ class Router
   end
 
   def controller(resource, action)
-    class_name = [resource + 'Controllers', action].join('::')
+    class_name = [resource + 'Controller', action].join('::')
 
     Module.const_get(class_name)
   end

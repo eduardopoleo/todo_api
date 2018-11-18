@@ -13,4 +13,4 @@ require_relative './entry_point'
 # Log web app configs
 Dir['./web/config/*.rb'].sort.each { |f| require f }
 
-run Web::EntryPoint.new
+run EntryPoint.new

@@ -12,15 +12,19 @@ describe EntryPoint do
     }
   end
 
-  class UsersControllers::Create < BaseController
-    def handle
-      [201, {}, ['User Created']]
+  module TaxController
+    class Create < BaseController
+      def handle
+        [201, {}, ['Tax Created']]
+      end
     end
-  end
+  end 
 
-  class UsersControllers::Index < BaseController
-    def handle
-      [200, {}, ['List of users']]
+  module InvoiceController
+    class Index < BaseController
+      def handle
+        [200, {}, ['List of invoices']]
+      end
     end
   end
 
@@ -28,8 +32,8 @@ describe EntryPoint do
 
   before do
     WebApp.router.config do
-      post '/users', to: 'users#create'
-      get '/users', to: 'users#index'
+      post '/users', to: 'tax#create'
+      get '/users', to: 'invoice#index'
     end
   end
   
@@ -40,7 +44,7 @@ describe EntryPoint do
       let(:url) { 'http://example.com:9393/users' }
 
       it 'calls the correct controller' do
-        expect(described_class.new.call(env)).to eq([201, {}, ['User Created']])
+        expect(described_class.new.call(env)).to eq([201, {}, ['Tax Created']])
       end
     end
 
@@ -50,7 +54,7 @@ describe EntryPoint do
       let(:url) { 'http://example.com:9393/users?name=eduardo&email=eduardo@influitive.com' }
 
       it 'calls the correct controller' do
-        expect(described_class.new.call(env)).to eq([200, {}, ['List of users']])
+        expect(described_class.new.call(env)).to eq([200, {}, ['List of invoices']])
       end
     end
   end
