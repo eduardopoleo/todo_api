@@ -23,7 +23,7 @@ class Router
 
   def execute(controller, params)
     resource, action = controller.split('#')
-    controller(classify(resource), classify(action)).send(:handle, params)
+    controller(classify(resource), classify(action)).new(params).send(:execute)
   end
 
   HTTP_VERBS.each do |method|

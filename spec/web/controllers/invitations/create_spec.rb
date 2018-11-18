@@ -3,7 +3,7 @@ require 'web_helper'
 
 describe InvitationsController::Create do
   describe '.handle' do
-    subject { described_class.handle(params) }
+    subject { described_class.new(params).handle }
 
     let(:params) { { email: 'eduardo@gmail.com'} }
     

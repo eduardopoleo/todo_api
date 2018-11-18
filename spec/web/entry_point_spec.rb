@@ -12,13 +12,15 @@ describe EntryPoint do
     }
   end
 
-  class UsersControllers::Create
-    def self.handle(params)
+  class UsersControllers::Create < BaseController
+    def handle
+      [201, {}, ['User Created']]
     end
   end
 
-  class UsersControllers::Index
-    def self.handle(params)
+  class UsersControllers::Index < BaseController
+    def handle
+      [200, {}, ['List of users']]
     end
   end
 
@@ -38,8 +40,7 @@ describe EntryPoint do
       let(:url) { 'http://example.com:9393/users' }
 
       it 'calls the correct controller' do
-        expect(UsersControllers::Create).to receive(:handle).with(JSON.parse(params))
-        described_class.new.call(env)
+        expect(described_class.new.call(env)).to eq([201, {}, ['User Created']])
       end
     end
 
@@ -49,11 +50,7 @@ describe EntryPoint do
       let(:url) { 'http://example.com:9393/users?name=eduardo&email=eduardo@influitive.com' }
 
       it 'calls the correct controller' do
-        expect(UsersControllers::Index)
-          .to receive(:handle)
-          .with({'name' => 'eduardo', 'email' => 'eduardo@influitive.com' })
-
-        described_class.new.call(env)
+        expect(described_class.new.call(env)).to eq([200, {}, ['List of users']])
       end
     end
   end

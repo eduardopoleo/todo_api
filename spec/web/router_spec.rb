@@ -123,12 +123,14 @@ describe Router do
   describe 'execute' do
     context 'when the controller class exist' do
       class UsersControllers::Update < BaseController
+        def handle
+        end
       end
 
       let(:params) { { name: 'jose', email: 'jose@gmail.com' } }
 
       it 'handles the response with the corresponding controller' do
-        expect(UsersControllers::Update).to receive(:handle).with(params)
+        expect_any_instance_of(UsersControllers::Update).to receive(:handle)
         subject.execute('users#update', params)
       end
     end

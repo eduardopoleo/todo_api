@@ -29,8 +29,6 @@ module UsersControllers
 
     private
 
-    attr_reader :params
-
     def user_params
       { name: params['name'], email: params['email'], password: params['password'] }
     end
