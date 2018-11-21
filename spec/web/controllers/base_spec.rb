@@ -2,41 +2,41 @@
 require 'web_helper'
 
 describe BaseController do
-  describe '.before_action' do
-    subject { described_class.before_action :authenticate }
+  after { BaseController.before_actions.clear }
 
+  describe '.before_action' do
     it 'saves the call back' do
-      subject
+      described_class.before_action :authenticate
       expect(described_class.before_actions).to include(:authenticate)
     end
 
-    context "when it's enhirited" do
+    context "when it's inherited" do
       it 'passes down the call backs to child clasess' do
-        subject
+        described_class.before_action :authenticate
 
-        class TestController1 < BaseController
+        class InheritedController < BaseController
         end
 
-        expect(TestController1.before_actions).to include(:authenticate)
+        expect(InheritedController.before_actions).to include(:authenticate)
       end
     end
   end
 
   describe '#execute' do
     context 'when there are not before action callbacks' do
-      class TestController2 < BaseController
+      class NoCallBackController < BaseController
         def handle
           [200, {}, ['Authorized']]
         end
       end
 
       it 'returns the handle response' do
-        expect(TestController2.new({}).execute).to eq([200, {}, ['Authorized']])
+        expect(NoCallBackController.new({}).execute).to eq([200, {}, ['Authorized']])
       end
     end
 
     context 'when there are before action callbacks' do
-      class TestController3 < BaseController
+      class CallbacksController < BaseController
         before_action :authenticate
 
         def handle
@@ -51,24 +51,24 @@ describe BaseController do
       context 'when the callback does not stop execution' do
         let(:params) { { valid: true} }
         it 'return response from handle' do
-          expect(TestController3.new(params).execute).to eq([200, {}, ['Authorized']])
+          expect(CallbacksController.new(params).execute).to eq([200, {}, ['Authorized']])
         end
       end
 
       context 'when the callback stops execution' do
         let(:params) { { valid: false } }
         it 'returns response from the callback' do
-          expect(TestController3.new(params).execute).to eq([401, {}, ['Unauthorized']])
+          expect(CallbacksController.new(params).execute).to eq([401, {}, ['Unauthorized']])
         end
       end
     end
 
     context 'when child controller has not defined handle' do
-      class TestController4 < BaseController
+      class NohandleController < BaseController
       end
 
       it 'reaises an exception' do
-        expect { TestController4.new({}).execute }.to raise_error(BaseController::HandlerNotDefined )
+        expect { NohandleController.new({}).execute }.to raise_error(BaseController::HandlerNotDefined )
       end
     end
   end
