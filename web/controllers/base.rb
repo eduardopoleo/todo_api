@@ -19,20 +19,31 @@ class BaseController
     before_actions.each { |cb| child_class.before_actions << cb }
   end
 
-  def initialize(params)
-    @params = params
+  def initialize(req)
+    @req = req
+    @status = 200
+    @headers = { 'Content-Type' => 'aplication/json' }
+    @body = []
+
+    @session = req.session
+
+    @params = req.get? ? req.params : post_params
   end
 
   def execute
-    self.class.before_actions.each { |cb| self.send(cb) }
+    catch :halt do
+      self.class.before_actions.each { |cb| self.send(cb) }
+      handle
+    end
 
-    return @response if @response
-
-    handle
+    Rack::Response.new(@body, @status, @headers).finish
   end
 
   def halt(status, message)
-    @response = [status, {}, [message]]
+    @status = status
+    @body = [message]
+
+    throw :halt
   end
 
   def handle
@@ -41,5 +52,15 @@ class BaseController
 
   private
 
-  attr_reader :params
+  attr_reader :params, :req, :session
+
+  def post_params
+    # This handle both json or form params as long as it's properly set.
+    case req.media_type
+    when 'application/json'
+      JSON.parse(req.body.read)
+    else
+      req.POST
+    end
+  end
 end

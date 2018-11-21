@@ -5,15 +5,9 @@ class EntryPoint
     route = WebApp.router.match(env['REQUEST_METHOD'], req.path)
 
     if route
-      WebApp.router.execute(route[:controller], params(req))
+      WebApp.router.execute(route[:controller], req)
     else
       [404, { 'Content-Type' => 'text/html' }, ['Not Found']]
     end
-  end
-
-  private
-
-  def params(req)
-    req.get? ? req.params : JSON.parse(req.body.read)
   end
 end

@@ -1,30 +1,20 @@
-require 'securerandom'
-
-module UsersControllers
+module UsersController
   class Login < BaseController
     def handle
       user = User.where(email: params['email']).first
 
       if user && authorized?(user)
-        # TODO: For now we are going to have only 1 session available
-        # Do we need to have different type of sessions? and based on that keep them?
-        DB.transaction do
-          Session.where(valid: true).update(valid: false)
-          Session.create(user_id: user.id, token: token)
-        end
-        # This is not correct. The session token has to be on the headers. Even the CLI 
-        # should know how to handle it.
-        [201, { 'Content-Type' => 'aplication/json' }, { session_token: token }.to_json]
+        session[:user_id] = user.id
+
+        @body = "You've successfully logged in"
+        @status = 201
       else
-        [401, { 'Content-Type' => 'aplication/json' }, { error: "Unauthorized" }.to_json]
+        @body = 'There seems to be a problem with you password or email. Try again'
+        @status = 401
       end
     end
 
     private
-
-    def token
-      @token ||= SecureRandom.base64
-    end
 
     def authorized?(user)
       bcrypt_password = BCrypt::Password.new(user.password_digest)
