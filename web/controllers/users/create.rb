@@ -1,9 +1,10 @@
-module UsersControllers
+module UsersController
   class Create < BaseController
     def handle
+      # clean up this crap.
       user = nil
-
       invitation = nil
+      db_session = nil
 
       if params[:invitation_token]
         invitation = Invitation.where(token: params[:invitation_token]).first
@@ -17,24 +18,23 @@ module UsersControllers
 
       DB.transaction do
         user = User.create(user_params)
-        Session.create(user_id: user.id, token: token)
+        db_session = Session.create(user: user)
 
         if invitation && group = invitation.group
           UserGroup.create(user_id: user.id, group_id: group.id)
         end
       end
       
-      [201, { 'Content-Type' => 'aplication/json' }, user.to_hash.merge(session_token: token).to_json]
+      session[:user_id] = user.id
+
+      @body = { message: 'You have successfully signed up!' }.to_json
+      @status = 201
     end
 
     private
 
     def user_params
       { name: params['name'], email: params['email'], password: params['password'] }
-    end
-
-    def token
-      @token ||= SecureRandom.base64
     end
   end
 end
