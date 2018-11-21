@@ -1,44 +1,21 @@
 # You need to use nested module so that ruby does not try to find it.
 require 'securerandom'
 
-module ListsControllers
+module ListsController
   class Create < BaseController
-    def self.handle(params, token)
-      new(params, token).handle
-    end
-
-    def initialize(params, token)
-      @params = params
-      @token = token
-    end
+    include AuthenticationHandler
 
     def handle
-      # TODO: this is wrong. We should be able to stop execution way before
-      # like a before action or a middleware that handles auth before getting
-      # here
-      if user 
-        list = List.create(list_params)
-        
-        # TODO: these serializers are becoming all too common at this point
-        [201, { 'Content-Type' => 'aplication/json' }, list.to_hash.to_json]
-      else
-        [401, { 'Content-Type' => 'aplication/json' }, { error: "Unauthorized" }.to_json]
-      end
+      list = List.create(list_params)
+
+      @status = 201
+      @body = { id: list.id, name: list.name, created_at: list.created_at }.to_json
     end
 
     private
 
-    attr_reader :token, :params
-
     def list_params
-      { name: params['name'], user: user }
-    end
-
-    def user
-      session = Session.where(token: token).first
-      return unless session
-
-      User.where(id: session.user_id).first
+      { name: params['name'], user: current_user }
     end
   end
 end

@@ -122,7 +122,17 @@ describe Router do
 
   describe 'execute' do
     context 'when the controller class exist' do
-      let(:params) { { name: 'jose', email: 'jose@gmail.com' } }
+      let(:env) { Rack::MockRequest.env_for('/some_url', options) }
+        
+      let(:options) do
+        {
+          method: :get,
+          params: {},
+          'CONTENT-TYPE' => 'application/json'
+        }
+      end
+
+      let(:req) { Rack::Request.new(env) }
 
       it 'handles the response with the corresponding controller' do
 
@@ -134,7 +144,7 @@ describe Router do
         end
 
         expect_any_instance_of(SomeController::Action).to receive(:handle)
-        subject.execute('some#action', params)
+        subject.execute('some#action', req)
       end
     end
   end

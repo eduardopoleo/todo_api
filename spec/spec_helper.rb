@@ -7,6 +7,7 @@ Dotenv.load('.env.test')
 
 require 'factory_bot'
 require 'database_cleaner'
+require 'pry'
 
 require_relative '../application'
 
@@ -29,7 +30,11 @@ RSpec.configure do |config|
     DatabaseCleaner.start
   end
 
-  config.after(:suite) do
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
     DatabaseCleaner.clean
   end
 

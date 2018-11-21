@@ -6,11 +6,12 @@ gem 'dotenv'
 gem 'bcrypt'
 gem 'terminal-table'
 gem 'rack'
-gem 'shotgun'
 
 group :development, :test do
   gem 'pry'
   gem 'rspec'
+  gem 'rack-test'
   gem 'database_cleaner'
   gem 'factory_bot'
+  gem 'json_expressions'
 end

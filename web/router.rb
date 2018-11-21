@@ -21,9 +21,9 @@ class Router
     routes.find { |r| r[:verb] == verb.downcase && r[:path] == path.downcase }
   end
 
-  def execute(controller, params)
+  def execute(controller, req)
     resource, action = controller.split('#')
-    controller(classify(resource), classify(action)).new(params).send(:execute)
+    controller(classify(resource), classify(action)).new(req).send(:execute)
   end
 
   HTTP_VERBS.each do |method|

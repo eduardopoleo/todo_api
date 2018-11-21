@@ -1,4 +1,10 @@
 require 'spec_helper'
+require 'rack/test'
+require 'json_expressions/rspec'
+
+RSpec.configure do |config|
+  config.include Rack::Test::Methods
+end
 
 # load the app
 require_relative '../web/app'

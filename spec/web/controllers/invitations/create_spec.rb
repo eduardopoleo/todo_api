@@ -2,23 +2,29 @@
 require 'web_helper'
 
 describe InvitationsController::Create do
-  describe '.handle' do
-    subject { described_class.new(params).handle }
+  include Rack::Test::Methods
 
-    let(:params) { { email: 'eduardo@gmail.com'} }
-    
+  def app
+    EntryPoint.new
+  end
+
+  before do
+    user = create(:user, name: 'miguel', email: 'miguel@gmail.com')
+    env "rack.session", { user_id: user.id }
+  end
+
+  describe '.handle' do
     it 'creates the invitation' do
       expect {
-        subject
-      }.to change(Invitation, :count)
+        post '/invitations', email: 'some@dude.com'
+      }.to change(Invitation, :count).by(1)
     end
 
     context 'when group_id is provided' do
-      let(:params) { { email: 'eduardo@gmail.com', group_id: group.id } }
       let(:group) { create(:group) }
 
       it 'associates the invitation to the group' do
-        subject
+        post '/invitations', email: 'some@dude.com', group_id: group.id
         expect(Invitation.last.group).to eq(group)
       end
     end
