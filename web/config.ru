@@ -9,8 +9,18 @@ WebApp = App.new
 # main rack entry point
 require_relative './entry_point'
 
-
-# Log web app configs
+# Load web app configs
 Dir['./web/config/*.rb'].sort.each { |f| require f }
+
+options = {
+  :key => 'rack.session',
+  :domain => 'localhost',
+  :path => '/',
+  :expire_after => 2592000,
+  :secret => ENV['SESSION_SECRET'],
+  :old_secret => ENV['OLD_SESSION_SECRET']
+}
+
+use Rack::Session::Cookie, options
 
 run EntryPoint.new

@@ -38,17 +38,6 @@ Sequel.migration do
       primary_key [:filename]
     end
     
-    create_table(:sessions, :ignore_index_errors=>true) do
-      primary_key :id
-      String :token, :text=>true, :null=>false
-      Integer :user_id, :null=>false
-      DateTime :created_at, :null=>false
-      TrueClass :valid, :default=>true
-      
-      index [:token]
-      index [:valid]
-    end
-    
     create_table(:tasks, :ignore_index_errors=>true) do
       primary_key :id
       Integer :list_id, :null=>false
