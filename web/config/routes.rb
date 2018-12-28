@@ -4,4 +4,5 @@ WebApp.router.config do
   post '/users', to: 'users#create'
   post '/lists', to: 'lists#create'
   post '/invitations', to: 'invitations#create'
+  get '/status', to: 'status#ping'
 end
