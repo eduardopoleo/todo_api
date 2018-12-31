@@ -2,7 +2,7 @@ module StatusController
   class Ping < BaseController
     def handle
       @status = 200
-      @body = 'Life is good'
+      @body = { message: 'Life is good' }.to_json
     end
   end
 end

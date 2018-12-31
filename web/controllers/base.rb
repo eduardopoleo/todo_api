@@ -22,7 +22,7 @@ class BaseController
   def initialize(req)
     @req = req
     @status = 200
-    @headers = { 'Content-Type' => 'aplication/json' }
+    @headers = { 'Content-Type' => 'application/json' }
     @body = []
 
     @session = req.session
