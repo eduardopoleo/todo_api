@@ -11,6 +11,7 @@ Dotenv.load(".env.#{env}")
 Sequel.extension :migration, :core_extensions
 Sequel::Model.plugin :timestamps, force: true, update_on_create: true
 
+# the string 'db' will translate to the host where the db is on docker
 DB = Sequel.connect(ENV['DATABASE_URL'])
 
 # setup logger

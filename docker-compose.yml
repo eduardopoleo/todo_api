@@ -19,5 +19,5 @@ services:
     ports:
       - '9292:9292'
     env_file:
-      - .env.development
-    command: rackup /web/config.ru
+      - .env.docker
+    command: rackup web/config.ru --host 0.0.0.0 -p 9292

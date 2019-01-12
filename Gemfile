@@ -6,6 +6,7 @@ gem 'dotenv'
 gem 'bcrypt'
 gem 'terminal-table'
 gem 'rack'
+gem 'rake'
 
 group :development, :test do
   gem 'pry'
